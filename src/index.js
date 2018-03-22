@@ -1,4 +1,4 @@
 ReactDOM.render(
-  <App />, 
+  <App searchYouTube={window.searchYouTube}/>, 
   document.getElementById('app')
 );
