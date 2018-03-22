@@ -1,6 +1,6 @@
 var Search = (props) => (
   <div className="search-bar form-inline">
-    <input className="form-control" type="text" onKeyPress={() => window.searchYouTube({max: '5', query: document.getElementsByClassName("form-control")[0].value, key: window.YOUTUBE_API_KEY}, props.update)}/>
+    <input className="form-control" type="text" onKeyPress={props.debounce} />
     <button className="btn hidden-sm-down">
       <span className="glyphicon glyphicon-search"></span>
     </button>

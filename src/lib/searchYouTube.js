@@ -18,3 +18,4 @@ var searchYouTube = (options, callback) => {
 };
 
 window.searchYouTube = searchYouTube;
+window.currentSearchRequest = null; // for debouncing

@@ -15,6 +15,15 @@ class App extends React.Component {
     this.setState({videos: data, playingVideo: data[0]});
   }
   
+  liveSearch() {
+    window.searchYouTube({max: '5', query: document.getElementsByClassName('form-control')[0].value, key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
+  }
+  
+  debounce() {
+    clearTimeout(window.currentSearchRequest);
+    window.currentSearchRequest = setTimeout(this.liveSearch.bind(this), 500);
+  }
+  
   // componentDidMount() {
   //   window.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
   // }
@@ -27,7 +36,7 @@ class App extends React.Component {
     return (<div>
       <nav className="navbar">
         <div className="col-md-6 offset-md-3">
-          {<Search update={this.updateFromSearch.bind(this)} />}
+          {<Search debounce={this.debounce.bind(this)} />}
         </div>
       </nav>
       <div className="row">
