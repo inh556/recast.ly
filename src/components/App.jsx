@@ -6,9 +6,6 @@ class App extends React.Component {
       videos: exampleVideoData,
       playingVideo: exampleVideoData[0],
     };
-    //this.componentDidMount();
-    // props.searchYouTube(function(){console.log('hello')}); // Passes the test, but why?
-    window.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
   }
   
   updateFromSearch(data) {
@@ -16,17 +13,20 @@ class App extends React.Component {
   }
   
   liveSearch() {
-    window.searchYouTube({max: '5', query: document.getElementsByClassName('form-control')[0].value, key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
+    console.log(document.getElementsByClassName('form-control'));
+    // this.props.searchYouTube({}, this.updateFromSearch.bind(this)); // Passes test
+    this.props.searchYouTube({max: '5', query: document.getElementsByClassName('form-control')[0].value, key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
   }
   
   debounce() {
     clearTimeout(window.currentSearchRequest);
+    // this.liveSearch.bind(this)(); // Passes test
     window.currentSearchRequest = setTimeout(this.liveSearch.bind(this), 500);
   }
   
-  // componentDidMount() {
-  //   window.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
-  // }
+  componentDidMount() {
+    this.props.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
+  }
   
   switchVideo(video) {
     this.setState({playingVideo: video});
