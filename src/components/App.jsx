@@ -7,18 +7,13 @@ class App extends React.Component {
       playingVideo: exampleVideoData[0],
     };
     //this.componentDidMount();
-    //props.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
-    // this.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
+    // props.searchYouTube(function(){console.log('hello')}); // Passes the test, but why?
     window.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
   }
   
   updateFromSearch(data) {
-    this.setState({videos: data.items, playingVideo: data.items[0]});
+    this.setState({videos: data, playingVideo: data[0]});
   }
-  
-  // searchYouTube(options, callback) {
-  //   window.searchYouTube(options, callback);
-  // }
   
   // componentDidMount() {
   //   window.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
@@ -32,7 +27,7 @@ class App extends React.Component {
     return (<div>
       <nav className="navbar">
         <div className="col-md-6 offset-md-3">
-          <div><h5><em>search</em> view goes here</h5></div>
+          {<Search update={this.updateFromSearch.bind(this)} />}
         </div>
       </nav>
       <div className="row">
