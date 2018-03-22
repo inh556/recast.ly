@@ -4,11 +4,25 @@ class App extends React.Component {
     super(props);
     this.state = {
       videos: exampleVideoData,
-      playingVideo: exampleVideoData[0]
+      playingVideo: exampleVideoData[0],
     };
-    console.log(window.searchYouTube);
-    window.searchYouTube();
+    //this.componentDidMount();
+    //props.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
+    // this.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
+    window.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
   }
+  
+  updateFromSearch(data) {
+    this.setState({videos: data.items, playingVideo: data.items[0]});
+  }
+  
+  // searchYouTube(options, callback) {
+  //   window.searchYouTube(options, callback);
+  // }
+  
+  // componentDidMount() {
+  //   window.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
+  // }
   
   switchVideo(video) {
     this.setState({playingVideo: video});
