@@ -6,6 +6,12 @@ class App extends React.Component {
       videos: exampleVideoData,
       playingVideo: exampleVideoData[0]
     };
+    console.log(window.searchYouTube);
+    window.searchYouTube();
+  }
+  
+  switchVideo(video) {
+    this.setState({playingVideo: video});
   }
   
   render() {
@@ -17,10 +23,10 @@ class App extends React.Component {
       </nav>
       <div className="row">
         <div className="col-md-7">
-          {<VideoPlayer state={this.state} playingVideo={this.state.playingVideo}/>}
+          {<VideoPlayer state={this.state} video={this.state.playingVideo}/>}
         </div>
-        <div className="col-md-5">        
-          {<VideoList state={this.state} videos={this.state.videos} />}
+        <div className="col-md-5">      
+          {<VideoList state={this.state} play={this.switchVideo.bind(this)} videos={this.state.videos}/>}
         </div>
       </div>
     </div>);
