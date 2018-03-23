@@ -5,26 +5,28 @@ class App extends React.Component {
     this.state = {
       videos: exampleVideoData,
       playingVideo: exampleVideoData[0],
+      comments: exampleCommentData,
+      search: 'what does the fox say',
     };
+  }
+  
+  componentDidMount() {
+    this.props.searchYouTube({max: '5', query: this.state.search, key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
   }
   
   updateFromSearch(data) {
     this.setState({videos: data, playingVideo: data[0]});
   }
   
-  liveSearch() {
-    // this.props.searchYouTube({}, this.updateFromSearch.bind(this)); // Passes test
-    this.props.searchYouTube({max: '5', query: document.getElementsByClassName('form-control')[0].value, key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
+  liveSearch(event) {
+    this.setState({search: event.target.value});
+    this.props.searchYouTube({max: '5', query: this.state.search, key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
   }
   
-  debounce() {
+  debounce(event) {
     clearTimeout(window.currentSearchRequest);
-    // this.liveSearch.bind(this)(); // Passes test
+    //this.liveSearch.bind(this)(); // Passes Mocha test
     window.currentSearchRequest = setTimeout(this.liveSearch.bind(this), 500);
-  }
-  
-  componentDidMount() {
-    this.props.searchYouTube({max: '5', query: 'What does the fox say', key: window.YOUTUBE_API_KEY}, this.updateFromSearch.bind(this));
   }
   
   switchVideo(video) {
@@ -35,7 +37,7 @@ class App extends React.Component {
     return (<div>
       <nav className="navbar">
         <div className="col-md-6 offset-md-3">
-          {<Search debounce={this.debounce.bind(this)} />}
+          {<Search search={this.liveSearch.bind(this)} />}
         </div>
       </nav>
       <div className="row">
